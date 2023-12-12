@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ஆழ்வார்கள் அருளிச்செயல்</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+    
+            th, td {
+
+                border: 1px solid #dddddd;
+                padding: 10px;
+                text-align: left;
+               
+            }
+    
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+    
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+    
+            tr:hover {
+                background-color: #ddd;
+            }
+        </style>
+    </head>
+    <hr>
+        <center><h3 style="color: rgb(255, 0, 25);">ஸ்ரீ: ஸ்ரீமதே ராமாநுஜாய நம:</h3></center>
+        <center><h3 style="color: blue;">ஆழ்வார்கள் அருளிச்செய்த நாலாயிர திவ்யப் பிரபந்தம்</h3></center>
+        <center> <h3 style="color: green;">Naalayira Divya Prabandham :  பதவுரை தேடல்</h3></center>
+    </hr>
+<body>
+    <tr>
+        <td>
+            <form method="post" action="{{ url_for('search1') }}">
+                <label for="search_term">பதவுரை</label>
+                <input type="text" id="search_term" name="search_term" required>
+                <button type="submit">Get Artham</button>
+            </form>
+        </td>
+        <td></td>
+        <td>
+            <form method="post" action="{{ url_for('search2') }}">
+                <label for="search_term">பதவுரை or எண் </label>
+                <input type="text" id="search_term" name="search_term" required>
+                <button type="submit">Get Pasuram</button>
+            </form>
+        </td>
+    </tr>
+</body>
+
+    {% if results %}
+    <h2>Search Results for '{{ search_term }}':</h2>
+    <table border="0">
+        <tr>
+            <th>Prabandham</th>
+            <th>Pasuram</th>
+            <th>PadhaArtham</th>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td style="color: rgb(255, 0, 225);" > {{ result.Prabandham|replace('\\r\\n', '\n') }}</td>    
+            <td style="white-space: pre-line;">{{ result.Pasuram|replace('\\r\\n', '\n') }}</td>     
+            <td width:20;style="color: rgb(255, 64, 0);">
+                {% for word_info in result.Words %}
+                    <p style="color: blue;">
+                        <span style="color: red;">{{ word_info.Word|replace('\\r\\n', '\n')}}</span>
+                        <span style="color: rgb(51, 0, 255);"> || </span>
+                        <span style="color: green;">{{ word_info.Meaning|replace('\\r\\n', '\n')}}</span>
+                    </p>
+                {% endfor %}
+            </td>
+        </tr>
+         {% endfor %}
+        </table>
+    {% else %}
+        <p>No results found for '{{ search_term }}'.</p>
+    {% endif %}
+</body>
+</html>
