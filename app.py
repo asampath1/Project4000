@@ -15,8 +15,8 @@ mysql_config = {
 '''
 mysql_config = {
     'host': 'aws.connect.psdb.cloud',
-    'user': '3l0zksrxndu5y1x7nsx8',
-    'password': 'pscale_pw_H8FontNjzCT9wTiGYwfFwxpDuxObaKyNPsQf088hNaN',
+    'user': '04hqaqcrjcvruc9w43jb',
+    'password': 'pscale_pw_xsHrgZNJj116JSGk1uzcfOJpTWGYc35m407qIMUFr0J',
     'database': 'tamildb',
     'ssl_ca': '/etc/ssl/cert.pem'
 }
