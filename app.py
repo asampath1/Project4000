@@ -4,6 +4,7 @@ import mysql.connector
 app = Flask(__name__)
 
 # MySQL connection details
+'''
 mysql_config = {
     'host': 'localhost',
     'port': 3307,
@@ -11,6 +12,17 @@ mysql_config = {
     'password': 'password',
     'database': 'tamildb'
 }
+'''
+mysql_config = {
+    'host': 'aws.connect.psdb.cloud',
+    'port': 3306,
+    'user': '3gr15pj6x6gt8qvjvg29',
+    'password': 'pscale_pw_gxijSnXNOl626SapjM0en86McxikwlTaaOhlhx625eF',
+    'database': 'tamildb'
+}
+
+
+
 
 def execute_query(query, params=None):
     cursor.execute(query, params)
