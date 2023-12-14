@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import mysql.connector
-
+from mysql.connector.constants import ClientFlag
 app = Flask(__name__)
 
 # MySQL connection details
@@ -18,10 +18,9 @@ mysql_config = {
     'port': 3306,
     'user': '3gr15pj6x6gt8qvjvg29',
     'password': 'pscale_pw_gxijSnXNOl626SapjM0en86McxikwlTaaOhlhx625eF',
-    'database': 'tamildb'
+    'database': 'tamildb',
+    'ssl_ca': '/etc/ssl/cert.pem'
 }
-
-
 
 
 def execute_query(query, params=None):
@@ -54,7 +53,6 @@ def search1():
         # Process the data to group by Pasuram and list words with meanings
         processed_results = []
         pasurams_seen = set()
-
 
         for result in results:
             pasuram_key = str(result['PasuramNumber'])+ ' ' + result['Prabandham'] + ' ' + str(result['PattuNumber'])
