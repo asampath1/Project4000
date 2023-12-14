@@ -26,6 +26,7 @@ Flask-Cors==4.0.0
 fsspec==2023.10.0
 gevent==23.9.1
 greenlet==3.0.1
+gunicorn
 hydra-core==1.0.7
 idna==3.4
 imagesize==1.4.1
