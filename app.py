@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request
 import mysql.connector
 from mysql.connector.constants import ClientFlag
+#import pymysql
+#from sqlalchemy import create_engine
+#mysql_config = create_engine("mysql+pymysql://f81a0idpi5zbykhrja3z:pscale_pw_FgHwt2XMZShgfhwBXacpQUNq65HVJ1Fn9pyCgjDj9Sg@saws.connect.psdb.cloud/tamildb?charset=utf8mb4")
+
+
+
 app = Flask(__name__)
 
 # MySQL connection details
@@ -11,14 +17,13 @@ mysql_config = {
     'user': 'root',
     'password': 'password',
     'database': 'tamildb'
-}
-'''
+}'''
 mysql_config = {
     'host': 'aws.connect.psdb.cloud',
-    'user': '04hqaqcrjcvruc9w43jb',
-    'password': 'pscale_pw_xsHrgZNJj116JSGk1uzcfOJpTWGYc35m407qIMUFr0J',
+    'user': 'f81a0idpi5zbykhrja3z',
+    'password': 'pscale_pw_FgHwt2XMZShgfhwBXacpQUNq65HVJ1Fn9pyCgjDj9Sg',
     'database': 'tamildb',
-    'ssl_ca': '/etc/ssl/cert.pem'
+    'ssl_ca': '/etc/ssl/cert.pem',
 }
 
 
