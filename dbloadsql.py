@@ -14,10 +14,11 @@ mysql_config = {
 
 mysql_config = {
     'host': 'aws.connect.psdb.cloud',
-    'port': 3306,
-    'user': '3gr15pj6x6gt8qvjvg29',
-    'password': 'pscale_pw_gxijSnXNOl626SapjM0en86McxikwlTaaOhlhx625eF',
+    #'port': 3306,
+    'user': '5vz8xighra0npu8xixem',
+    'password': 'pscale_pw_rRnbZkKHHVxFe8pOlbYJERoN9ev1tfYejzQpetf2217',
     'database': 'tamildb'
+   # 'ssl_ca': '/etc/ssl/cert.pem',
 }
 
 # JSON file path
@@ -39,7 +40,7 @@ for record in data.get('MasterSheet', []):
     (Sno, Prabandham, PasuramNumber, Pasuram, PattuNumber, Word, Padham, Meaning, Alzwar, PadhamNumber)
     VALUES (%(Sno)s, %(Prabandham)s, %(PasuramNumber)s, %(Pasuram)s, %(PattuNumber)s, %(Word)s, %(Padham)s,  %(Meaning)s, %(Alzwar)s, %(PadhamNumber)s)
     """
-    #print(record)
+    print(record)
     # Execute the insert query with the current record
     cursor.execute(insert_query, record)
 
