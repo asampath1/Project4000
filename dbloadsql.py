@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector import connect
 
-load_dotenv("creds.env")
+load_dotenv("dbcreds.env")
 
 # Get MySQL connection details from environment variables
 db_user = os.environ.get("MYSQL_USER")
