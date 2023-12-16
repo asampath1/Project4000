@@ -2,3 +2,4 @@
 /etc/ssl/client-cert.pem
 /etc/ssl/client-key.pem
 dbcreds.env
+/etc/ssl/cert.pem

@@ -16,7 +16,6 @@ db_name = os.environ.get("MYSQL_DATABASE")
 # SSL configuration
 ssl_ca = os.environ.get("MYSQL_SSL_CA")
 
-
 print(db_user,db_password,db_host,db_name)
 
 # Establish MySQL connection with SSL

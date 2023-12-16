@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import mysql.connector
+import mysql.connector.pooling
 from mysql.connector.constants import ClientFlag
 from mysql.connector import connect
 import os
@@ -11,19 +12,43 @@ load_dotenv("dbcreds.env")
 db_user = os.environ.get("MYSQL_USER")
 db_password = os.environ.get("MYSQL_PASSWORD")
 db_host = os.environ.get("MYSQL_HOST")
+db_port = os.environ.get("MYSQL_PORT")
 db_name = os.environ.get("MYSQL_DATABASE")
 
 # SSL configuration
 ssl_ca = os.environ.get("MYSQL_SSL_CA")
+print("SSL CA Path:", ssl_ca)
+
+db_pool = mysql.connector.pooling.MySQLConnectionPool(
+    pool_name="mypool",
+    pool_size=5,
+    user=db_user,
+    password=db_password,
+    host=db_host,
+    port=db_port,
+    database=db_name,
+    ssl_ca=ssl_ca,
+)
+
+
+
+
+'''
 
 # Establish MySQL connection with SSL
 mysql_config = {
     'user':db_user,
     'password':db_password,
     'host':db_host,
+    'port':db_port,
     'database':db_name,
     'ssl_ca':ssl_ca
-}
+    },
+
+
+'''
+
+print('MYSQL_CONFIG', db_pool)
 
 app = Flask(__name__)
 
@@ -42,7 +67,8 @@ def search1():
         search_term = request.form['search_term']
 
         # MySQL connection
-        connection = mysql.connector.connect(**mysql_config)
+       # connection = mysql.connector.connect(**mysql_config)
+        connection = db_pool.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # Execute the search query
@@ -86,7 +112,8 @@ def search2():
         search_term = request.form['search_term']
 
         # MySQL connection
-        connection = mysql.connector.connect(**mysql_config)
+        # connection = mysql.connector.connect(**mysql_config)
+        connection = db_pool.get_connection()
         cursor = connection.cursor(dictionary=True)
 
         # Execute the search query '%{search_term}%'
