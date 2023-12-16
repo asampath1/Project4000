@@ -1,8 +1,8 @@
 import openpyxl
-from tamil_transliteration import transliterate
+from tamil_transliteration import transliteration
 
 # Open the Excel file
-wb = openpyxl.load_workbook("your_excel_file.xlsx")
+wb = openpyxl.load_workbook("/Users/asampathkuma/Downloads/Project4000/tamilwords.xlsx")
 sheet = wb["Sheet1"]  # Replace "Sheet1" with your actual sheet name
 
 # Define the transliteration system

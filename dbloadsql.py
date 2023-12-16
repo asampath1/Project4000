@@ -1,28 +1,36 @@
 import json
+import os
+from dotenv import load_dotenv
+
 import mysql.connector
+from mysql.connector import connect
 
-# MySQL connection details
-'''
+load_dotenv("creds.env")
+
+# Get MySQL connection details from environment variables
+db_user = os.environ.get("MYSQL_USER")
+db_password = os.environ.get("MYSQL_PASSWORD")
+db_host = os.environ.get("MYSQL_HOST")
+db_name = os.environ.get("MYSQL_DATABASE")
+
+# SSL configuration
+ssl_ca = os.environ.get("MYSQL_SSL_CA")
+
+
+print(db_user,db_password,db_host,db_name)
+
+# Establish MySQL connection with SSL
 mysql_config = {
-    'host': 'localhost',
-    'port': 3307,
-    'user': 'root',
-    'password': 'password',
-    'database': 'tamildb'
-}
-'''
-
-mysql_config = {
-    'host': 'aws.connect.psdb.cloud',
-    #'port': 3306,
-    'user': '5vz8xighra0npu8xixem',
-    'password': 'pscale_pw_rRnbZkKHHVxFe8pOlbYJERoN9ev1tfYejzQpetf2217',
-    'database': 'tamildb'
-   # 'ssl_ca': '/etc/ssl/cert.pem',
+    'user':db_user,
+    'password':db_password,
+    'host':db_host,
+    'database':db_name,
+    'ssl_ca':ssl_ca
 }
 
+#print(mysql_config)
 # JSON file path
-json_file_path = '/Users/asampathkuma/Downloads/4K Pasuram/data4.json'
+json_file_path = '/Users/asampathkuma/Downloads/Project4000/data4.json'
 
 # MySQL connection
 connection = mysql.connector.connect(**mysql_config)
