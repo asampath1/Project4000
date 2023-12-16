@@ -1,5 +1,0 @@
-# .gitignore
-/etc/ssl/ca-cert.pem
-/etc/ssl/client-cert.pem
-/etc/ssl/client-key.pem
-/Users/asampathkuma/Downloads/Project4000/creds.env
