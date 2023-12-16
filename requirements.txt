@@ -66,6 +66,7 @@ pydload==1.0.9
 Pygments==2.17.2
 python-dateutil==2.8.2
 python-utils==3.8.1
+python-dotenv
 pytz==2023.3
 PyYAML==6.0
 pymysql==1.1.0

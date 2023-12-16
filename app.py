@@ -1,32 +1,31 @@
 from flask import Flask, render_template, request
 import mysql.connector
 from mysql.connector.constants import ClientFlag
-#import pymysql
-#from sqlalchemy import create_engine
-#mysql_config = create_engine("mysql+pymysql://f81a0idpi5zbykhrja3z:pscale_pw_FgHwt2XMZShgfhwBXacpQUNq65HVJ1Fn9pyCgjDj9Sg@saws.connect.psdb.cloud/tamildb?charset=utf8mb4")
+from mysql.connector import connect
+import os
+from dotenv import load_dotenv
 
+load_dotenv("creds.env")
 
+# Get MySQL connection details from environment variables
+db_user = os.environ.get("MYSQL_USER")
+db_password = os.environ.get("MYSQL_PASSWORD")
+db_host = os.environ.get("MYSQL_HOST")
+db_name = os.environ.get("MYSQL_DATABASE")
 
-app = Flask(__name__)
+# SSL configuration
+ssl_ca = os.environ.get("MYSQL_SSL_CA")
 
-# MySQL connection details
-'''
+# Establish MySQL connection with SSL
 mysql_config = {
-    'host': 'localhost',
-    'port': 3307,
-    'user': 'root',
-    'password': 'password',
-    'database': 'tamildb'
-}'''
-mysql_config = {
-    'host': 'aws.connect.psdb.cloud',
-    #'port': 3306,
-    'user': '5vz8xighra0npu8xixem',
-    'password': 'pscale_pw_rRnbZkKHHVxFe8pOlbYJERoN9ev1tfYejzQpetf2217',
-    'database': 'tamildb'
-   # 'ssl_ca': '/etc/ssl/cert.pem',
+    'user':db_user,
+    'password':db_password,
+    'host':db_host,
+    'database':db_name,
+    'ssl_ca':ssl_ca
 }
 
+app = Flask(__name__)
 
 def execute_query(query, params=None):
     cursor.execute(query, params)
