@@ -3,3 +3,4 @@
 /etc/ssl/client-key.pem
 dbcreds.env
 /etc/ssl/cert.pem
+app copy.py
