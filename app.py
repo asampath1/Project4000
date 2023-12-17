@@ -5,35 +5,36 @@ from mysql.connector.constants import ClientFlag
 from mysql.connector import connect
 import os
 from dotenv import load_dotenv
+import MySQLdb
+from MySQLdb.cursors import DictCursor
+
+os.environ['DYLD_LIBRARY_PATH'] = '/usr/local/opt/mysql/lib/'
+
 load_dotenv("dbcreds.env")
 
-# Get MySQL connection details from environment variables
-db_user = os.environ.get("MYSQL_USER")
-db_password = os.environ.get("MYSQL_PASSWORD")
-db_host = os.environ.get("MYSQL_HOST")
-db_name = os.environ.get("MYSQL_DATABASE")
+print(os.getenv("DB_HOST"))
+print(os.getenv("DB_USERNAME"))
+print(os.getenv("DB_PASSWORD"))
+print(os.getenv("DB_NAME"))
 
-# SSL configuration
-ssl_ca = os.environ.get("MYSQL_SSL_CA")
 
-print(db_user,db_password,db_host,db_name)
+connection = MySQLdb.connect(
+  host= os.getenv("DB_HOST"),
+  user=os.getenv("DB_USERNAME"),
+  passwd= os.getenv("DB_PASSWORD"),
+  db= os.getenv("DB_NAME"),
+  autocommit = True,
+  ssl_mode = "VERIFY_IDENTITY",
+  ssl      = {
+    "ca": "/etc/ssl/cert.pem"
+  },
+    cursorclass=DictCursor  # Set the cursorclass parameter
+)
 
-# Establish MySQL connection with SSL
-mysql_config = {
-    'user':db_user,
-    'password':db_password,
-    'host':db_host,
-    'database':db_name,
-    'ssl_ca':ssl_ca
-}
-
-print('MYSQL_CONFIG', mysql_config)
+# Execute the search query
+#cursor = connection.cursor()
 
 app = Flask(__name__)
-
-def execute_query(query, params=None):
-    cursor.execute(query, params)
-    return cursor.fetchall()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -46,8 +47,8 @@ def search1():
         search_term = request.form['search_term']
 
         # MySQL connection
-        connection = mysql.connector.connect(**mysql_config)
-        cursor = connection.cursor(dictionary=True)
+       # connection = mysql.connector.connect(**mysql_config)
+        cursor = connection.cursor()
 
         # Execute the search query
         search_query = f"SELECT * FROM PasuramsArthamTable WHERE Word LIKE '%{search_term}%'"
@@ -90,15 +91,14 @@ def search2():
         search_term = request.form['search_term']
 
         # MySQL connection
-        connection = mysql.connector.connect(**mysql_config)
-        cursor = connection.cursor(dictionary=True)
+       # connection = mysql.connector.connect(**mysql_config)
+        cursor = connection.cursor()
 
         # Execute the search query '%{search_term}%'
         #search_query = f"SELECT * FROM tamildb.PasuramsArthamTable WHERE Pasuram LIKE '(%{search_term}%)' OR PasuramNumber = {search_term}"
         #cursor.execute(search_query)
         search_query = "SELECT * FROM tamildb.PasuramsArthamTable WHERE Pasuram LIKE %s OR PasuramNumber = %s"
         cursor.execute(search_query, ('%' + search_term + '%', search_term))
-
         results = cursor.fetchall()
 
         # Close the MySQL connection
