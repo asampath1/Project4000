@@ -6,34 +6,37 @@ import mysql.connector
 from mysql.connector import connect
 
 load_dotenv("dbcreds.env")
+load_dotenv("dbcreds.env")
 
 # Get MySQL connection details from environment variables
-db_user = os.environ.get("MYSQL_USER")
-db_password = os.environ.get("MYSQL_PASSWORD")
-db_host = os.environ.get("MYSQL_HOST")
-db_name = os.environ.get("MYSQL_DATABASE")
+db_host= os.getenv("DB_HOST")
+db_user=os.getenv("DB_USERNAME")
+db_passwd= os.getenv("DB_PASSWORD")
+db_name= os.getenv("DB_NAME")
+db_port=os.getenv("DB_PORT")
+db_ssl_ca=os.getenv("DB_SSL_CA")
 
-# SSL configuration
-ssl_ca = os.environ.get("MYSQL_SSL_CA")
+print("SSL CA Path:", db_ssl_ca)
 
-print(db_user,db_password,db_host,db_name)
+db_pool = mysql.connector.pooling.MySQLConnectionPool(
+    pool_name="mypool",
+    pool_size=5,
+    user=db_user,
+    password=db_passwd,
+    host=db_host,
+    port=db_port,
+    database=db_name,
+    ssl_ca=db_ssl_ca
+)
 
-# Establish MySQL connection with SSL
-mysql_config = {
-    'user':db_user,
-    'password':db_password,
-    'host':db_host,
-    'database':db_name,
-    'ssl_ca':ssl_ca
-}
 
 #print(mysql_config)
 # JSON file path
 json_file_path = '/Users/asampathkuma/Downloads/Project4000/data4.json'
 
 # MySQL connection
-connection = mysql.connector.connect(**mysql_config)
-cursor = connection.cursor()
+connection = db_pool.get_connection()
+cursor = connection.cursor(dictionary=True)
 
 # Read and parse JSON file
 with open(json_file_path, 'r', encoding='utf-8') as json_file:
@@ -47,7 +50,7 @@ for record in data.get('MasterSheet', []):
     (Sno, Prabandham, PasuramNumber, Pasuram, PattuNumber, Word, Padham, Meaning, Alzwar, PadhamNumber)
     VALUES (%(Sno)s, %(Prabandham)s, %(PasuramNumber)s, %(Pasuram)s, %(PattuNumber)s, %(Word)s, %(Padham)s,  %(Meaning)s, %(Alzwar)s, %(PadhamNumber)s)
     """
-    print(record)
+   # print(record)
     # Execute the insert query with the current record
     cursor.execute(insert_query, record)
 
